@@ -16,6 +16,8 @@ public class BaseController
         message = new Dictionary<string, System.Action<object[]>>();
 
     }
+    //注册后调用的初始化函数（要所有控制器初始化后执行）
+    public virtual void Init() { }
     public virtual void OnLoadView(IBaseView view) { }//加载视图
     //打开视图
     public virtual void OpenView(IBaseView view)
@@ -28,7 +30,7 @@ public class BaseController
 
     }
     //注册模板事件
-    public void RegisterFunc(string eventName,System.Action<object[]> callback)
+    public void RegisterFunc(string eventName, System.Action<object[]> callback)
     {
         if (message.ContainsKey(eventName))
         {
@@ -48,7 +50,7 @@ public class BaseController
         }
     }
     //触发本模块事件 
-    public void ApplyFunc(string eventName,params object[] args)
+    public void ApplyFunc(string eventName, params object[] args)
     {
         if (message.ContainsKey(eventName))
         {
@@ -60,11 +62,19 @@ public class BaseController
         }
     }
     //触发其他模板事件;例PlayerContorller得到InventoryController的方法
-    public void ApplyControllerFun(int controllerKey,string eventName,params object[] args)
+    public void ApplyControllerFunc(int controllerKey, string eventName, params object[] args)
     {
-        
+
         GameApp.ControllerManager.ApllyFunc(controllerKey, eventName, args);
     }
+    //执行所有控制器初始化
+    public void ApplyControllerFunc(ControllerType type, string eventName, params object[] args)
+    {
+        ApplyControllerFunc((int)type, eventName, args);
+    }
+
+
+
     //设置模型数据
     public void SetModel(BaseModel model)
     {
@@ -85,7 +95,7 @@ public class BaseController
     }
     public virtual void Destory()
     {
-        
+
         RemoveModuleEvent();
         RemoveGlobalEvent();
     }

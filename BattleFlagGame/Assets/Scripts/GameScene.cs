@@ -17,6 +17,20 @@ public class GameScene : MonoBehaviour
         //播放音乐
         GameApp.SoundManager.PlayBGM("login");
         Cursor.SetCursor(CursorPic, Vector2.zero, CursorMode.Auto);
+        //注册游戏内的控制器
+        RegisterModuel();//注册游戏内的控制器
+        InitModule();
+    }
+    //注册控制器
+    void RegisterModuel()
+    {
+        GameApp.ControllerManager.Register(ControllerType.GameUI,new GameUIController());
+        GameApp.ControllerManager.Register(ControllerType.Game, new GameController());
+    }
+    //执行所有控制器的初始化
+    void InitModule()
+    {
+        GameApp.ControllerManager.InitAllModules();
     }
     private void Update()
     {

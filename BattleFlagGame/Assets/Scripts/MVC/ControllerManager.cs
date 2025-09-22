@@ -13,12 +13,23 @@ public class ControllerManager
     {
         _modules = new Dictionary<int, BaseController>();
     }
+    public void Register(ControllerType type,BaseController ctl)
+    {
+        Register((int)type, ctl);
+    }
     //×¢²á¿ØÖÆÆ÷
     public void Register(int controllerKey, BaseController ctl)
     {
         if (_modules.ContainsKey(controllerKey) == false)
         {
             _modules.Add(controllerKey, ctl);
+        }
+    }
+    public void InitAllModules()
+    {
+        foreach(var item in _modules)
+        {
+            item.Value.Init();
         }
     }
     //ÒÆ³ý¿ØÖÆÆ÷

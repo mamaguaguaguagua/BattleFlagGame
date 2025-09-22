@@ -8,9 +8,11 @@ public class GameApp:Singleton<GameApp>
 {
     public static SoundManager SoundManager;//音频管理器
     public static ControllerManager ControllerManager;//控制器管理器
+    public static ViewManager ViewManager;
     public override void Init()
     {
         SoundManager = new SoundManager();
         ControllerManager = new ControllerManager();
+        ViewManager = new ViewManager();
     }
 }
