@@ -79,6 +79,7 @@ public class BaseController
     public void SetModel(BaseModel model)
     {
         this.model = model;
+        this.model.controller = this;
     }
     //得到模型
     public BaseModel GetModel()

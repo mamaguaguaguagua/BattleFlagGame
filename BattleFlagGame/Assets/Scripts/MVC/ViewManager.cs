@@ -9,6 +9,7 @@ public class ViewInfo
     public string PrefabName;//视图预制体名称
     public Transform parentTf;//所在父级
     public BaseController controller;//视图所属控制器
+    public int Sorting_Order;//显示层级 ，改变显示顺序
 }
 /// <summary>
 /// 视图管理器
@@ -141,6 +142,7 @@ public class ViewManager
                 uiObj.AddComponent<GraphicRaycaster>();
             }
             canvas.overrideSorting = true;//canvas可以设置层级
+            canvas.sortingOrder = viewInfo.Sorting_Order;//设置层级
             view = uiObj.AddComponent (Type.GetType(type))as IBaseView;//添加对应的View脚本
             view.ViewId = key;//设置视图ID
             view.Controller = viewInfo.controller;//设置控制器

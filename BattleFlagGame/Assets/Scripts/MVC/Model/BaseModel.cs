@@ -9,6 +9,10 @@ public class BaseModel
     {
         this.controller = ctl;
     }
+    public BaseModel()
+    {
+
+    }
     public  virtual void Init()
     {
 

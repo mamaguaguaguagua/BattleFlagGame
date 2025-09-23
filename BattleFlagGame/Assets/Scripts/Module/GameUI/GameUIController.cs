@@ -21,6 +21,15 @@ public class GameUIController : BaseController
         {
             PrefabName = "SetView",
             controller = this,
+            Sorting_Order=1,//挡住开始面板比他层级高一点
+            parentTf = GameApp.ViewManager.canvasTf
+        });
+        //提示面板
+        GameApp.ViewManager.Register(ViewType.MessageView, new ViewInfo()
+        {
+            PrefabName = "MessageView",
+            controller = this,
+            Sorting_Order = 999,
             parentTf = GameApp.ViewManager.canvasTf
         });
         InitModuleEvent();//初始化模板事件
@@ -30,6 +39,7 @@ public class GameUIController : BaseController
     {
         RegisterFunc(Defines.OpenStartView, openStartView);//注册打开面板
         RegisterFunc(Defines.OpenSetView, openSetView);//注册设置面板
+        RegisterFunc(Defines.OpenMessageView, openMessageView);//打开提示面板
     }
     //测试模板注册事件 例子
     private void openStartView(System.Object[] arg)
@@ -40,6 +50,11 @@ public class GameUIController : BaseController
     private void openSetView(System.Object[] arg)
     {
         GameApp.ViewManager.Open(ViewType.SetView, arg);
+    }
+    //打开提示面板
+    private void openMessageView(System.Object[] arg)
+    {
+        GameApp.ViewManager.Open(ViewType.MessageView, arg);
     }
 
 }

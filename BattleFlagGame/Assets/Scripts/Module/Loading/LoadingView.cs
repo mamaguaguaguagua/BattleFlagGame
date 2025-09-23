@@ -1,11 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public enum ViewType
+//º”‘ÿΩÁ√Ê
+public class LoadingView : BaseView
 {
-    StartView,
-    SetView,
-    MessageView,
-    LoadingView
+   
 }

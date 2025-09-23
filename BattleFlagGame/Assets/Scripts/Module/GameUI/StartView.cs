@@ -16,7 +16,12 @@ public class StartView : BaseView
     }
     private void OnStartGameBtn()
     {
-
+        //关闭开始界面
+        GameApp.ViewManager.Close(ViewId);
+        
+        LoadingModel loadingModel = new LoadingModel();
+        loadingModel.SceneName = "map";
+        Controller.ApplyControllerFunc(ControllerType.Loading, Defines.LoadingScene, loadingModel);
     }
     private void OnSetBtn()
     {
@@ -24,6 +29,13 @@ public class StartView : BaseView
     }
     private void OnQuitBtn()
     {
-
+        Controller.ApplyControllerFunc(ControllerType.GameUI, Defines.OpenMessageView, new MessageInfo()
+        {
+            okCallback = delegate ()
+            {
+                Application.Quit();//退出游戏
+            },
+            MsgText = "确定退出游戏吗？"
+        });
     }
 }
