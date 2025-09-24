@@ -21,6 +21,12 @@ public class StartView : BaseView
         
         LoadingModel loadingModel = new LoadingModel();
         loadingModel.SceneName = "map";
+        loadingModel.callback = delegate ()
+        {
+            //打开选择关卡界面
+
+            Controller.ApplyControllerFunc(ControllerType.Level, Defines.OpenSelectLevelView);
+        };
         Controller.ApplyControllerFunc(ControllerType.Loading, Defines.LoadingScene, loadingModel);
     }
     private void OnSetBtn()

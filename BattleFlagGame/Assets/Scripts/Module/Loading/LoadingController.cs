@@ -10,9 +10,9 @@ public class LoadingController : BaseController
     {
         GameApp.ViewManager.Register(ViewType.LoadingView, new ViewInfo()
         {
-            PrefabName="LoadingView",
-            controller=this,
-            parentTf=GameApp.ViewManager.canvasTf
+            PrefabName = "LoadingView",
+            controller = this,
+            parentTf = GameApp.ViewManager.canvasTf
         }
             );
         InitModuleEvent();
@@ -30,7 +30,7 @@ public class LoadingController : BaseController
         //打开加载界面
         GameApp.ViewManager.Open(ViewType.LoadingView);
         //加载 场景
-       asyncOp =  SceneManager.LoadSceneAsync(loadingModel.SceneName);
+        asyncOp = SceneManager.LoadSceneAsync(loadingModel.SceneName);
         asyncOp.completed += onLoadedEndCallBack;
     }
     //加载后回调

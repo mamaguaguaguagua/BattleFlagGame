@@ -7,5 +7,6 @@ public enum ViewType
     StartView,
     SetView,
     MessageView,
-    LoadingView
+    LoadingView,
+    SelectLevelView,
 }
