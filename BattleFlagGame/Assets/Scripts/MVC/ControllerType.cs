@@ -9,5 +9,6 @@ public enum ControllerType
     GameUI,
     Game,
     Loading,
-    Level
+    Level,
+    Fight
 }

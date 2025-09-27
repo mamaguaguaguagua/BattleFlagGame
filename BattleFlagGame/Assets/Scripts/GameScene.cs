@@ -47,6 +47,7 @@ public class GameScene : MonoBehaviour
         GameApp.ControllerManager.Register(ControllerType.Game, new GameController());
         GameApp.ControllerManager.Register(ControllerType.Loading, new LoadingController());
         GameApp.ControllerManager.Register(ControllerType.Level, new LevelController());
+        GameApp.ControllerManager.Register(ControllerType.Fight, new FightController());
     }
     //执行所有控制器的初始化
     void InitModule()

@@ -12,6 +12,14 @@ public static class Defines
     public static readonly string OpenMessageView = "OpenMessageView";//打开提示面板
     public static readonly string OpenSelectLevelView = "OpenSelectLevelView";//打开关卡选择面板
     public static readonly string LoadingScene = "LoadingScene";//打开加载面板
+    public static readonly string BeginFight = "BeginFight";//开始战斗
 
+
+    //全局事件相关字符串
+    public static readonly string ShowLevelDesEvent = "ShowLevelDesEvent";
+    public static readonly string HideLevelDesEvent = "HideLevelDesEvent";
+
+    public static readonly string OnSelectEvent = "OnSelectEvent";//选中事件
+    public static readonly string OnUnSelectEvent = "OnUnSelectEvent";//未选中事件
 
 }
