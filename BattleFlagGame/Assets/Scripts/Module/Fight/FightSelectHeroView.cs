@@ -1,11 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 /// <summary>
 /// 选择英雄面板
 /// </summary>
 public class FightSelectHeroView : BaseView
 {
+    protected override void OnAwake()
+    {
+        base.OnAwake();
+        Find<Button>("bottom/startBtn").onClick.AddListener(onFightBtn);
+    }
+
+    //选完英雄开始进入到玩家回合
+    private void onFightBtn()
+    {
+        //如果一个英雄都没选，要提示玩家 选择 这里我没有对应的提示界面，自己可以制作扩展
+        if (GameApp.FightWorldManager.heros.Count == 0)
+        {
+            Debug.Log("没有选项英雄");
+        }
+        else
+        {
+            GameApp.ViewManager.Close(ViewId);//关闭当前选英雄界面
+
+            //切换到玩家回合
+            GameApp.FightWorldManager.ChangeState(GameState.Player);
+        }
+    }
     public override void Open(params object[] args)
     {
         base.Open(args);

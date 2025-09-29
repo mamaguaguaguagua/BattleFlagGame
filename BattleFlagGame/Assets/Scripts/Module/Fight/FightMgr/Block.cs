@@ -24,16 +24,26 @@ public class Block : MonoBehaviour
         gridSp = transform.Find("grid").GetComponent<SpriteRenderer>();
         dirSp = transform.Find("dir").GetComponent<SpriteRenderer>();
         GameApp.MsgCenter.AddEvent(gameObject, Defines.OnSelectEvent, OnSelectCallBack);
+        GameApp.MsgCenter.AddEvent(Defines.OnUnSelectEvent, OnUnSelectCallBack);
     }
     private void OnDestroy()
     {
         GameApp.MsgCenter.RemoveEvent(gameObject, Defines.OnSelectEvent, OnSelectCallBack);
+        GameApp.MsgCenter.RemoveEvent(Defines.OnUnSelectEvent, OnUnSelectCallBack);
     }
 
     void OnSelectCallBack(System.Object arg)
     {
+
         GameApp.MsgCenter.PostEvent(Defines.OnUnSelectEvent);
+        //修改bug：要准备英雄后，才能进入我方回合，我方回合&&命令窗口没有问题的情况下，才能执行战斗选项
+        if (GameApp.CommandManager.IsRunningCommand == false
+          && GameApp.FightWorldManager.state == GameState.Player)
+        {
+            GameApp.ViewManager.Open(ViewType.FightOptionDesView);
+        }
     }
+
 
     private void OnMouseEnter()
     {
@@ -54,5 +64,17 @@ public class Block : MonoBehaviour
     public void HideGrid()
     {
         gridSp.enabled = false;
+    }
+    //添加没选中的响应
+    void OnUnSelectCallBack(System.Object arg)
+    {
+        dirSp.sprite = null; 
+        GameApp.ViewManager.Close((int)ViewType.FightOptionDesView);
+    }
+    //设置箭头方向的图片资源和颜色
+    public void SetDirSp(Sprite sp, Color color)
+    {
+        dirSp.sprite = sp;
+        dirSp.color = color;
     }
 }

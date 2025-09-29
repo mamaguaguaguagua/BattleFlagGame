@@ -4,7 +4,10 @@ using UnityEngine;
 public enum GameState
 {
     Idle,
-    Enter
+    Enter,
+    Player,
+    Enemy,
+    GameOver
 }
 
 /// <summary>
@@ -60,6 +63,15 @@ public class FightWorldManager
             case GameState.Enter:
                 _current = new FightEnter();
                 break;
+            case GameState.Player:
+                _current = new FightPlayerUnit();
+                break;
+            case GameState.Enemy:
+                _current = new FightEnemyUnit();
+                break;
+            case GameState.GameOver:
+                _current = new FightGameOverUnit();
+                break;
         }
         _current.Init();
     }
@@ -74,7 +86,10 @@ public class FightWorldManager
         Debug.Log("enemy:" + objs.Length);
         for (int i = 0; i < objs.Length; i++)
         {
-            enemys.Add(objs[i].GetComponent<Enemy>());
+            Enemy enemy = objs[i].GetComponent<Enemy>();
+            //当前位置被占有，要把对应的方块类型设置成障碍物
+            GameApp.MapManager.ChangeBlockType(enemy.RowIndex, enemy.ColIndex, BlockType.Obstacle);
+            enemys.Add(enemy);
         }
     }
     //添加英雄
@@ -87,5 +102,75 @@ public class FightWorldManager
         //该位置被占领了，设置方块的类型为障碍物
         b.Type = BlockType.Obstacle;
         heros.Add(hero);
+    }
+    //移除怪物
+    public void RemoveEnemy(Enemy enemy)
+    {
+        enemys.Remove(enemy);
+
+        //死亡后不要占用格子
+        GameApp.MapManager.ChangeBlockType(enemy.RowIndex, enemy.ColIndex, BlockType.Null);
+        //补充游戏结束的判断
+        if (enemys.Count == 0)
+        {
+            ChangeState(GameState.GameOver);
+        }
+    }
+
+    //移除英雄
+    public void RemoveHero(Hero hero)
+    {
+        heros.Remove(hero);
+        GameApp.MapManager.ChangeBlockType(hero.RowIndex, hero.ColIndex, BlockType.Null);
+        //补充游戏结束的判断
+        if (heros.Count == 0)
+        {
+            ChangeState(GameState.GameOver);
+        }
+    }
+    //重置英雄行动
+    public void ResetHeros()
+    {
+        for (int i = 0; i < heros.Count; i++)
+        {
+            heros[i].IsStop = false;
+        }
+    }
+
+    //重置敌人行动
+    public void ResetEnemys()
+    {
+        for (int i = 0; i < enemys.Count; i++)
+        {
+            enemys[i].IsStop = false;
+        }
+    }
+    //获得最近英雄的距离
+    public ModelBase GetMinDisHero(ModelBase model)
+    {
+        if (heros.Count == 0)
+        {
+            return null;
+        }
+
+        Hero hero = heros[0];
+        float min_dis = hero.GetDis(model);
+        for (int i = 1; i < heros.Count; i++)
+        {
+            float dis = heros[i].GetDis(model);
+            if (dis < min_dis)
+            {
+                min_dis = dis;
+                hero = heros[i];
+            }
+        }
+        return hero;
+    }
+    //卸载资源
+    public void ReLoadRes()
+    {
+        heros.Clear();
+        enemys.Clear();
+        GameApp.MapManager.Clear();
     }
 }

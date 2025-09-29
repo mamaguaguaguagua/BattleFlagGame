@@ -106,11 +106,12 @@ public class MessageCenter
             }
         }
     }
+    
     public void AddTempEvent(string eventName, System.Action<object> callback)
     {
         if (tempMsgDic.ContainsKey(eventName))
         {
-            //添加临时事件，然后被覆盖掉
+            //添加临时事件，然后被覆盖掉，不是累加的
             tempMsgDic[eventName] = callback;
         }
         else
